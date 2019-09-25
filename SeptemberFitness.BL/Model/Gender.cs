@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace SeptemberFitness.BL.Model
 {
+    [Serializable]
     /// <summary>
     /// Пол.
     /// </summary>
