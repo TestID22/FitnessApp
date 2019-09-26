@@ -39,7 +39,7 @@ namespace SeptemberFitness.BL.Controller
         {
             var formatter = new BinaryFormatter();
 
-            using (var fs = new FileStream("users.dar", FileMode.OpenOrCreate))
+            using (var fs = new FileStream("users.dat", FileMode.OpenOrCreate))
             {
                 if (formatter.Deserialize(fs) is User user)
                 {
@@ -56,7 +56,7 @@ namespace SeptemberFitness.BL.Controller
         {
             var formatter = new BinaryFormatter();
 
-            using (var fs = new FileStream("users.dar", FileMode.OpenOrCreate))
+            using (var fs = new FileStream("users.dat", FileMode.OpenOrCreate))
             {
                 formatter.Serialize(fs, User); //serialize 
             }
