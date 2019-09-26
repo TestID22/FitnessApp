@@ -10,7 +10,7 @@ namespace SeptemberFitness.BL.Model
     /// <summary>
     /// Пользователь.
     /// </summary>
-    class User
+    public class User
     {
         #region Properties
         /// <summary>
@@ -44,7 +44,7 @@ namespace SeptemberFitness.BL.Model
         /// <param name="gender"> Пол. </param>
         /// <param name="weight"> Вес. </param>
         /// <param name="height"> Рост. </param>
-        public User(string name, DateTime birthDay, Gender gender, double weight, double height)
+        public User(string name, Gender gender ,DateTime birthDay, double weight, double height)
         {
             #region Проверка условий
             if (string.IsNullOrWhiteSpace(name))
@@ -55,15 +55,15 @@ namespace SeptemberFitness.BL.Model
             {
                 throw new ArgumentNullException("Пол не может быть Null", nameof(name));
             }
-            if (BirthDay < DateTime.Parse("01.01.1950") || BirthDay > DateTime.Now)
+            if (birthDay < DateTime.Parse("01.01.1950") || birthDay > DateTime.Now)
             {
                 throw new ArgumentNullException("Дата невозможна", nameof(birthDay));
             }
-            if(Weight <= 0)
+            if(weight <= 0)
             {
                 throw new ArgumentNullException("Вес не может быть 0", nameof(weight));
             }
-            if(Height <= 0)
+            if(height <= 0)
             {
                 throw new ArgumentNullException("Рост не может быть 0", nameof(height));
             }
@@ -75,6 +75,9 @@ namespace SeptemberFitness.BL.Model
             Weight = weight;
             Height = height;
         }
+
+        
+
         public override string ToString()
         {
             return Name;

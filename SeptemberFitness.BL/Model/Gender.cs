@@ -10,7 +10,7 @@ namespace SeptemberFitness.BL.Model
     /// <summary>
     /// Пол.
     /// </summary>
-    class Gender
+    public class Gender
     {
         /// <summary>
         /// М.Ж. название.
