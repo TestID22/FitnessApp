@@ -12,54 +12,77 @@ namespace SeptemberFitness.BL.Controller
     /// <summary>
     /// Контроллер пользователя.
     /// </summary>
-    class UserControllers
+    public class UserControllers
     {
         /// <summary>
         /// Пользователь приложения.
         /// </summary>
-        public User User { get; }
+        public User CurrentUser { get; }
+        /// <summary>
+        /// Список всех пользователей.
+        /// </summary>
+        public List<User> Users { get; }
+
+        public bool IsNewUser { get; } = false;
 
         /// <summary>
         /// Создать контроллер нового пользователя.
         /// </summary>
-        /// <param name="user"></param>
-        public UserControllers(User user)
+        /// <param name="user">Имя пользователя.</param>
+        public UserControllers(string name)
         {
-            if(user == null)
+            if(string.IsNullOrWhiteSpace(name))
             {
-                throw new ArgumentNullException("Юзер не может быть Null", nameof(user));
+                throw new ArgumentNullException("Юзер не может быть Null", nameof(name));
             }
-            User = user;
+            Users = GetUsersData();
+
+            CurrentUser = Users.SingleOrDefault(u => u.Name == name);
+            if(CurrentUser == null)
+            {
+                CurrentUser = new User(name);
+                Users.Add(CurrentUser);
+                IsNewUser = true;
+                Save();
+            }
+            
         }
-        /// <summary>
-        /// Сохранить данные пользователя.
-        /// </summary>
+
+        //Сереализация.
         public void Save()
         {
             var formatter = new BinaryFormatter();
 
-            using (var fs = new FileStream("users.dar", FileMode.OpenOrCreate))
+            using (var fs = new FileStream("users.dat", FileMode.OpenOrCreate))
             {
-                formatter.Serialize(fs, User); //serialize 
+                formatter.Serialize(fs, Users); //serialize 
             }
         }
-        /// <summary>
-        /// Получить данные пользователя.
-        /// </summary>
-        /// <returns></returns>
-        public User Load()
+      
+        //Десереализация.
+        private List<User> GetUsersData()
         {
             var formatter = new BinaryFormatter();
 
-            using (var fs = new FileStream("users.dar", FileMode.OpenOrCreate))
+            using (var fs = new FileStream("users.dat", FileMode.OpenOrCreate))
             {
-                if (formatter.Deserialize(fs) is User user)
+                if (formatter.Deserialize(fs) is List<User> Users)
                 {
-                    return user;
+                    return Users;
 
                 }
-                    return null;
+                    return new List<User>();
             }
+        }
+        
+        //Созать пользователя. Если он новый.
+        public void SetNewUserData(string gender, DateTime birthdate, double weight , double height )
+        {
+            CurrentUser.Gender = new Gender(gender);
+            CurrentUser.BirthDay = birthdate;
+            CurrentUser.Weight = weight;
+            CurrentUser.Height = height;
+            Save(); //не забывай сереализовать нового пользователя.
         }
     }
 }
