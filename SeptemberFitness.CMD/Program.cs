@@ -37,7 +37,10 @@ namespace SeptemberFitness.CMD
                 var height = double.Parse(Console.ReadLine());
 
                 userController.SetNewUserData(gender, dateTime, weight, height);
+
             }
+
+            
             Console.WriteLine(userController.CurrentUser);
             Console.ReadLine();
 

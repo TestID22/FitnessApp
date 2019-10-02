@@ -26,8 +26,6 @@ namespace SeptemberFitness.BL.Model
         /// </summary>
         public double Carbohydrates { get; }
 
-    
-
         public Food(string name) : this (name, 0, 0, 0, 0)
         {
             //TODO: проверка
@@ -49,7 +47,7 @@ namespace SeptemberFitness.BL.Model
             Carbohydrates = carbohydrates / 100.0;
         }
 
-        public override string ToString() => Name;
+        public override string ToString()  => Name;
            
      
     }
