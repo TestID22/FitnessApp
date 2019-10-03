@@ -9,11 +9,19 @@ using System.Threading.Tasks;
 
 namespace SeptemberFitness.BL.Controller
 {
-    class EatingController
+    /// <summary>
+    /// Справочник еды.
+    /// </summary>
+    class EatingController : ControllerBase
     {
         private readonly User user;
 
+        private const string FOODS_FILENAME = "foods.dat";
+        private const string EATINGS_FILENAME = "";
+
         public List<Food> Foods { get; }
+
+        public List<Eating> Eatings{ get;}
 
         public EatingController(User user)
         {
@@ -22,20 +30,32 @@ namespace SeptemberFitness.BL.Controller
                 throw new ArgumentNullException("Юзер не может быть Null", nameof(user));
             }
             this.user = user;
-            Foods = GetAllFoods();
-        }
 
+            Foods = GetAllFoods();
+            Eatings = GetAllEatings();
+        }
+        
         private List<Food> GetAllFoods()
         {
-            var formatter = new BinaryFormatter();
-            using (var fs = new FileStream("foods.dat", FileMode.OpenOrCreate)) 
-            {
-                if (fs.Length > 0 && formatter.Deserialize(fs) is List<Food> foods)
-                {
-                    return foods;
-                }
-                else return new List<Food>();
-            }
+            return Load <List<Food>>(FOODS_FILENAME) ?? new List<Food>();
         }
+        private List<Eating> GetAllEatings()
+        {
+            return Load<List<Eating>>(EATINGS_FILENAME) ?? new List<Eating>();
+        }
+
+        
+        private void Save()
+        {
+            Save(FOODS_FILENAME, Foods);
+            Save(EATINGS_FILENAME, Eatings);
+        }
+
+        public bool Add(string foodname, double weight)
+        {
+            var food = Foods.SingleOrDefault(f => f.Name == foodname);
+            var eating = new Eating(user);
+        }
+
     }
 }

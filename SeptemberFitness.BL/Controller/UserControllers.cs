@@ -12,7 +12,7 @@ namespace SeptemberFitness.BL.Controller
     /// <summary>
     /// Контроллер пользователя.
     /// </summary>
-    public class UserControllers
+    public class UserControllers : ControllerBase
     {
         /// <summary>
         /// Пользователь приложения.
@@ -51,28 +51,14 @@ namespace SeptemberFitness.BL.Controller
         //Сереализация.
         public void Save()
         {
-            var formatter = new BinaryFormatter();
-
-            using (var fs = new FileStream("users.dat", FileMode.OpenOrCreate))
-            {
-                formatter.Serialize(fs, Users); //serialize 
-            }
+            Save("users.dat", Users);
         }
       
         //Десереализация.
         private List<User> GetUsersData()
         {
-            var formatter = new BinaryFormatter();
-
-            using (var fs = new FileStream("users.dat", FileMode.OpenOrCreate))
-            {
-                if (fs.Length > 0 && formatter.Deserialize(fs) is List<User> Users)
-                {
-                    return Users;
-
-                }
-                    return new List<User>();
-            }
+            return Load<List<User>>("users.dat") ?? new List<User>();
+       
         }
         
         //Созать пользователя. Если он новый.
