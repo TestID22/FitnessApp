@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace SeptemberFitness.BL.Model
 {
+    [Serializable]
     /// <summary>
     /// Приём пищи.
     /// </summary>
-    class Eating
+    public class Eating
     {
         /// <summary>
         /// Время приёма.

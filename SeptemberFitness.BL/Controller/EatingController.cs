@@ -12,16 +12,16 @@ namespace SeptemberFitness.BL.Controller
     /// <summary>
     /// Справочник еды.
     /// </summary>
-    class EatingController : ControllerBase
+    public class EatingController : ControllerBase
     {
         private readonly User user;
 
         private const string FOODS_FILENAME = "foods.dat";
-        private const string EATINGS_FILENAME = "";
+        private const string EATINGS_FILENAME = "eatings.dat";
 
-        public List<Food> Foods { get; }
+        public List<Food> Foods { get; } //список Различных Продуктов
 
-        public List<Eating> Eatings{ get;}
+        public Eating Eating { get; } // Приём Пищи
 
         public EatingController(User user)
         {
@@ -32,29 +32,39 @@ namespace SeptemberFitness.BL.Controller
             this.user = user;
 
             Foods = GetAllFoods();
-            Eatings = GetAllEatings();
+            Eating = GetEating();
         }
         
+
         private List<Food> GetAllFoods()
         {
             return Load <List<Food>>(FOODS_FILENAME) ?? new List<Food>();
         }
-        private List<Eating> GetAllEatings()
+        private Eating GetEating()
         {
-            return Load<List<Eating>>(EATINGS_FILENAME) ?? new List<Eating>();
+            return Load<Eating>(EATINGS_FILENAME) ?? new Eating(user);
         }
 
-        
+        public void Add(Food food, double weight)
+        {
+            var product = Foods.SingleOrDefault(f => f.Name == food.Name);
+            if(food != null)
+            {
+                Foods.Add(food);
+                Eating.FoodAdd(food, weight);
+                Save();
+            }
+            else
+            {
+                Eating.FoodAdd(product, weight);
+                Save();
+            }
+        }
+
         private void Save()
         {
             Save(FOODS_FILENAME, Foods);
-            Save(EATINGS_FILENAME, Eatings);
-        }
-
-        public bool Add(string foodname, double weight)
-        {
-            var food = Foods.SingleOrDefault(f => f.Name == foodname);
-            var eating = new Eating(user);
+            Save(EATINGS_FILENAME, Eating);
         }
 
     }

@@ -13,6 +13,8 @@ namespace SeptemberFitness.CMD
     {
         static void Main(string[] args)
         {
+            
+
             Console.Title = "FitnessApp by September";
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("Вас приветствует Финтнес приложение Нового Поколения");
@@ -22,6 +24,8 @@ namespace SeptemberFitness.CMD
             var name = Console.ReadLine();
 
             var userController = new UserControllers(name);
+            var eatingController = new EatingController(userController.CurrentUser);
+
             if (userController.IsNewUser)
             {
                 Console.WriteLine("пол");
@@ -40,11 +44,52 @@ namespace SeptemberFitness.CMD
 
             }
 
-            
             Console.WriteLine(userController.CurrentUser);
+
+            Console.WriteLine("Что вы хотите");
+            Console.WriteLine("Ввести ввод пищи");
+
+            var key = Console.ReadKey();
+            if(key.Key == ConsoleKey.E)
+            {
+                var foods = EnterEating();
+                eatingController.Add(foods.Food, foods.Weight);
+
+                foreach(var item in eatingController.Eating.Foods)
+                {
+                    Console.WriteLine("\t Продукт " + item.Key  + " вес " + item.Value);
+                }
+            }
+
+
+
             Console.ReadLine();
 
         }
-    }
-}
+
+        private static (Food Food, double Weight) EnterEating()
+        {
+            Console.WriteLine("Введите имя продукта");
+            var foodName = Console.ReadLine();
+
+            Console.WriteLine("Введите вес порции");
+            var weight = double.Parse(Console.ReadLine());
+
+            Console.WriteLine("Калорийность продукта");
+            var callories = double.Parse(Console.ReadLine());
+
+            Console.WriteLine("Белки продукта");
+            var proteins = double.Parse(Console.ReadLine());
+
+            Console.WriteLine("Жиры продукта");
+            var fats = double.Parse(Console.ReadLine());
+
+            Console.WriteLine("Углеводы продукта");
+            var carbohydrates = double.Parse(Console.ReadLine()); ;
+
+            var product = new Food(foodName, callories, proteins, fats, carbohydrates);
+
+            return (product, weight);
+        }
+    }}
  
