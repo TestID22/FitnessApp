@@ -44,8 +44,11 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Controller\ControllerBase.cs" />
     <Compile Include="Controller\EatingController.cs" />
+    <Compile Include="Controller\ExerciseContoller.cs" />
     <Compile Include="Controller\UserControllers.cs" />
+    <Compile Include="Model\Activity.cs" />
     <Compile Include="Model\Eating.cs" />
+    <Compile Include="Model\Exercise.cs" />
     <Compile Include="Model\Food.cs" />
     <Compile Include="Model\Gender.cs" />
     <Compile Include="Model\User.cs" />
