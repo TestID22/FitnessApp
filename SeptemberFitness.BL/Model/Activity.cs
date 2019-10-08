@@ -17,7 +17,7 @@ namespace SeptemberFitness.BL.Model
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-
+                throw new ArgumentNullException("укажите активность", nameof(name));
             }
             Name = name;
             CaloriesPerMinute = caloriesPerMinute;

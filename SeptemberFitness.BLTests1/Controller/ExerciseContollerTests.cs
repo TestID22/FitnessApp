@@ -7,30 +7,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace SeptemberFitness.BL.Controller.Tests
 {
     [TestClass()]
-    public class EatingControllerTests
+    public class ExerciseContollerTests
     {
         [TestMethod()]
         public void AddTest()
         {
-            //Arrange
             var userName = Guid.NewGuid().ToString();
-            var foodName = Guid.NewGuid().ToString();
+            var activityName = Guid.NewGuid().ToString();
             var rnd = new Random();
 
             var userController = new UserControllers(userName);
-            var eatingController = new EatingController(userController.CurrentUser);
 
-            var food = new Food(foodName, rnd.Next(100, 500), rnd.Next(100, 500), rnd.Next(100, 500), rnd.Next(100, 500));
+            var exController= new ExerciseContoller(userController.CurrentUser);
+
+            var activity = new Activity(activityName, rnd.Next(50, 500));
 
             //Act
-            eatingController.Add(food, 100);
+            exController.Add(activity, DateTime.Now, DateTime.Now.AddHours(1));
 
             //Assert
-            Assert.AreEqual(foodName, eatingController.Eating.Foods.First().Key.Name);
+            Assert.AreEqual(activityName, exController.Activities.First().Name);
         }
     }
 }
