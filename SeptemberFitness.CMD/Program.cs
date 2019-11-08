@@ -47,18 +47,31 @@ namespace SeptemberFitness.CMD
             Console.WriteLine(userController.CurrentUser);
 
             Console.WriteLine("Что вы хотите");
-            Console.WriteLine("Ввести ввод пищи");
+            Console.WriteLine("E - Ввести Пищу");
+            Console.WriteLine("A - Ввести Активность");
+
 
             var key = Console.ReadKey();
-            if(key.Key == ConsoleKey.E)
+            switch (key.Key)
             {
-                var foods = EnterEating();
-                eatingController.Add(foods.Food, foods.Weight);
+                case ConsoleKey.E:
+                    { 
+                    var foods = EnterEating();
+                    eatingController.Add(foods.Food, foods.Weight);
+                        foreach (var item in eatingController.Eating.Foods)
+                        {
+                            Console.WriteLine("\t Продукт " + item.Key + " вес " + item.Value);
+                        }
+                        break;
+                    }
+                case ConsoleKey.A:
+                    {
 
-                foreach(var item in eatingController.Eating.Foods)
-                {
-                    Console.WriteLine("\t Продукт " + item.Key  + " вес " + item.Value);
-                }
+
+                        break;
+                    }
+                    
+             
             }
 
 

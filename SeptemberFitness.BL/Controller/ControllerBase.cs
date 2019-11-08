@@ -7,40 +7,21 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SeptemberFitness.BL.Controller
-{/// <summary>
-/// В базовом классе вынесены методы сереализации и десереализации 
-/// используя дженерики для Типов User, Food, EaTING
-/// </summary>
+{ 
     public abstract class ControllerBase
     {
-        /// <summary>
-        /// Обобщённый метод для Сериализации Юзеров и для Сохранения еды.
-        /// </summary>
-        /// <param name="fileName"></param>
-        /// <param name="obj"></param>
+        //Реализация Dependecy Injection через интерфейс TO DO: ADD DataBaseSaver Entity Framework
+        protected IDataSaver saver = new SerializeDataSaver();
+
         protected void Save(string fileName, Object obj)
         {
-            var formatter = new BinaryFormatter();
-
-            using (var fs = new FileStream(fileName, FileMode.OpenOrCreate))
-            {
-                formatter.Serialize(fs, obj); //serialize 
-            }
+            saver.Save(fileName, obj);
         }
        
         //Возвращаем любой тип Т, при использовании метода указываем загружаеммый ТИП данных.
         protected T Load<T>(string fileName)
         {
-            var formatter = new BinaryFormatter();
-
-            using(var fs = new FileStream(fileName, FileMode.OpenOrCreate))
-            {
-                if (fs.Length > 0 && formatter.Deserialize(fs) is T item)
-                {
-                    return item;
-                }
-                return default(T);
-            }
+            return saver.Load<T>(fileName);
         }
     }
 }
