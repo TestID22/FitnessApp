@@ -12,16 +12,19 @@ namespace SeptemberFitness.BL.Model
     /// </summary>
     public class Eating
     {
+        public int Id { get; set; }
         /// <summary>
         /// Время приёма.
         /// </summary>
-        public DateTime Moment{ get;}
+        public DateTime Moment{ get; set; }
         /// <summary>
         /// Список еды.
         /// </summary>
-        public Dictionary <Food, double> Foods { get;}
+        public Dictionary <Food, double> Foods { get; set; }
 
-        public User User { get; }
+        public int UserID { get; set; }
+
+        public virtual User User { get; set; }
 
         public Eating(User user)
         {

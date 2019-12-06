@@ -12,10 +12,11 @@ namespace SeptemberFitness.BL.Model
     /// </summary>
     public class Gender
     {
+        public int Id { get; set; }
         /// <summary>
         /// М.Ж. название.
         /// </summary>
-        public string Name { get;}
+        public string Name { get; set; }
         /// <summary>
         /// Создать новый пол.
         /// </summary>
